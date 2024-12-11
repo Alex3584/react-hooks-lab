@@ -6,6 +6,10 @@ import "./MainContent.scss";
 import UseStateDemo from "../HooksDemo/UseStateDemo";
 import UseEffectDemo from "../HooksDemo/UseEffectDemo";
 import UseContextDemo from "../HooksDemo/UseContextDemo";
+import UseReducerDemo from "../HooksDemo/UseReducerDemo";
+import UseMemoDemo from "../HooksDemo/UseMemoDemo";
+import UseCallbackDemo from "../HooksDemo/UseCallbackDemo";
+import UseRefDemo from "../HooksDemo/UseRefDemo";
 
 function MainContent() {
   return (
@@ -16,6 +20,10 @@ function MainContent() {
           <Route path="/use-state" element={<UseStateDemo />} />
           <Route path="/use-effect" element={<UseEffectDemo />} />
           <Route path="/use-context" element={<UseContextDemo />} />
+          <Route path="/use-reducer" element={<UseReducerDemo />} />
+          <Route path="/use-memo" element={<UseMemoDemo />} />
+          <Route path="/use-callback" element={<UseCallbackDemo />} />
+          <Route path="/use-ref" element={<UseRefDemo />} />
         </Routes>
       </MainScreen>
     </div>
