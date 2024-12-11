@@ -1,0 +1,17 @@
+@use "./variables.scss" as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: $color-base-dark;
+  line-height: 1.5;
+  margin: 0;
+}
