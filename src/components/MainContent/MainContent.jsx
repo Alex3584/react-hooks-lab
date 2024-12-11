@@ -5,6 +5,7 @@ import "./MainContent.scss";
 
 import UseStateDemo from "../HooksDemo/UseStateDemo";
 import UseEffectDemo from "../HooksDemo/UseEffectDemo";
+import UseContextDemo from "../HooksDemo/UseContextDemo";
 
 function MainContent() {
   return (
@@ -14,6 +15,7 @@ function MainContent() {
         <Routes>
           <Route path="/use-state" element={<UseStateDemo />} />
           <Route path="/use-effect" element={<UseEffectDemo />} />
+          <Route path="/use-context" element={<UseContextDemo />} />
         </Routes>
       </MainScreen>
     </div>
