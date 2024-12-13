@@ -1,34 +1,34 @@
 import React, { useState, useRef } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import Button from "../common/Button/Button";
+import CodeHighlighter from "../common/CodeHighlighter/CodeHighlighter";
+import Input from "../common/Input/Input";
+import "./HooksDemo.scss";
 
 function UseRefDemo() {
-  const [count, setCount] = useState(0);
   const inputRef = useRef(null);
   const countRef = useRef(0);
+  const [showDomCode, setShowDomCode] = useState(false);
+  const [showRefCode, setShowRefCode] = useState(false);
 
-  // Увеличиваем реф-счетчик
   const incrementRef = () => {
     countRef.current += 1;
     alert(`Current ref count: ${countRef.current}`);
   };
 
-  // Фокус на input
   const focusInput = () => {
     inputRef.current.focus();
   };
 
-  const refCode = `
+  const reset = () => {
+    countRef.current = 0;
+    alert("Ref count has been reset to 0.");
+  };
+
+  const domCode = `
 import React, { useRef } from "react";
 
-function UseRefDemo() {
+function DOMManipulationWithUseRef() {
   const inputRef = useRef(null);
-  const countRef = useRef(0);
-
-  const incrementRef = () => {
-    countRef.current += 1;
-    alert(\`Current ref count: \${countRef.current}\`);
-  };
 
   const focusInput = () => {
     inputRef.current.focus();
@@ -36,69 +36,80 @@ function UseRefDemo() {
 
   return (
     <div>
-      <h3>DOM Manipulation with useRef</h3>
       <input ref={inputRef} type="text" placeholder="Focus me!" />
       <button onClick={focusInput}>Focus Input</button>
+    </div>
+  );
+}
+  `;
 
-      <h3>Persistent Value with useRef</h3>
+  const refCode = `
+import React, { useRef } from "react";
+
+function PersistentValueWithUseRef() {
+  const countRef = useRef(0);
+
+  const incrementRef = () => {
+    countRef.current += 1;
+    alert(\`Current ref count: \${countRef.current}\`);
+  };
+
+  return (
+    <div>
       <button onClick={incrementRef}>Increment Ref</button>
     </div>
   );
 }
-
-export default UseRefDemo;
   `;
 
   return (
-    <>
+    <section className="hook-section">
       <h2>useRef</h2>
-      <p>
-        <strong>useRef</strong> is a React hook that creates a mutable object
-        whose `.current` property persists across renders. It is often used to
-        access DOM elements or to persist values without causing re-renders.
-      </p>
+      <div className="hook-section__description">
+        <p>
+          <strong>useRef</strong> - використовується для створення посилань на
+          елементи DOM або для зберігання значень, які не викликають повторного
+          рендеру.
+        </p>
+        <p>
+          <strong>useRef</strong> повертає об'єкт, який зберігається між
+          рендерами. Ви можете використовувати його для доступу до елементів DOM
+          або для збереження значень.
+        </p>
+      </div>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h3>DOM Manipulation with useRef</h3>
-        <input
+      <div className="hook-section__examples">
+        <h3>Маніпуляції DOM з використанням useRef</h3>
+        <Input
           ref={inputRef}
-          type="text"
-          placeholder="Click the button to focus me!"
-          style={{
-            display: "block",
-            marginBottom: "1rem",
-            padding: "0.5rem",
-            border: "1px solid #ccc",
-            borderRadius: "4px",
-          }}
+          placeholder="Натисніть кнопку, щоб сфокусувати на мене!"
         />
-        <button onClick={focusInput} style={{ marginBottom: "1rem" }}>
-          Focus Input
-        </button>
-      </section>
+        <Button onClick={focusInput}>Focus Input</Button>
+        <Button onClick={() => setShowDomCode((prev) => !prev)}>
+          {showDomCode ? "Приховати код" : "Показати код"}
+        </Button>
+        {showDomCode && <CodeHighlighter code={domCode} />}
+      </div>
 
-      <section>
-        <h3>Persistent Value with useRef</h3>
-        <button onClick={incrementRef} style={{ marginRight: "1rem" }}>
-          Increment Ref
-        </button>
-        <p>Click the button to see the current ref count.</p>
-      </section>
-
-      <SyntaxHighlighter
-        language="javascript"
-        style={vscDarkPlus}
-        customStyle={{
-          marginTop: "1rem",
-          padding: "1rem",
-          borderRadius: "4px",
-          backgroundColor: "#1e1e1e",
-          color: "#fff",
-        }}
-      >
-        {refCode}
-      </SyntaxHighlighter>
-    </>
+      <div className="hook-section__examples">
+        <h3>Постійне значення з useRef</h3>
+        <div className="hook-section__examples-buttons">
+          <Button onClick={incrementRef}>Increment Ref</Button>
+          <Button
+            variant="reset"
+            onClick={reset}
+            style={{ marginLeft: "1rem" }}
+          >
+            Reset
+          </Button>
+        </div>
+        <p>Натисніть кнопку, щоб побачити поточну кількість посилань.</p>
+        <Button onClick={() => setShowRefCode((prev) => !prev)}>
+          {showRefCode ? "Приховати код" : "Показати код"}
+        </Button>
+        {showRefCode && <CodeHighlighter code={refCode} />}
+      </div>
+    </section>
   );
 }
 

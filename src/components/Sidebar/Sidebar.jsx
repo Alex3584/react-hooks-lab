@@ -10,6 +10,7 @@ function Sidebar() {
     { to: "/use-memo", label: "useMemo" },
     { to: "/use-callback", label: "useCallback" },
     { to: "/use-ref", label: "useRef" },
+    { to: "/use-layout-effect", label: "useLayoutEffect" },
   ];
 
   return (

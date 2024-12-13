@@ -2,27 +2,15 @@
 $color-base-dark: #16161f;
 $color-base-light: #fafafa;
 $color-base-normal: #818181;
+$color-base-header: #505f7f;
 
 // Кольори кнопки
-$color-button-active: #121226;
-$color-button-disabled: #9f9f9f;
-
-// Кольори кнопки логін
-$color-default-login: #ffffff;
-$color-hover-login: #e5e5ff;
-$color-active-login: #a3a3ff;
+$color-button-default: #1e1e1e;
+$color-button-disabled: #818181;
+$color-button-hover: #9f9f9f;
+$color-button-reset:#e74c3c;
+$color-button-reset-hover:#c0392b;
 
 // Кольори лінків
-$color-dropdown-link:#777777;
-$color-dropdown-hover:#484848;
 $color-link-hover: #282851;
-
-// Кольори іконок
-$color-icon-yellow: #ffd233;
-$color-icon-green: #41c322;
-
-// Колір тексту cookies
-$color-cookies: #414040;
-
-// Кольори інпутів
-$color-input-required: #dc3545;
+$color-link-hover-footer: #f39c12;

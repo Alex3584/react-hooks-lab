@@ -10,6 +10,7 @@ import UseReducerDemo from "../HooksDemo/UseReducerDemo";
 import UseMemoDemo from "../HooksDemo/UseMemoDemo";
 import UseCallbackDemo from "../HooksDemo/UseCallbackDemo";
 import UseRefDemo from "../HooksDemo/UseRefDemo";
+import UseLayoutEffectDemo from "../HooksDemo/UseLayoutEffectDemo";
 
 function MainContent() {
   return (
@@ -24,6 +25,7 @@ function MainContent() {
           <Route path="/use-memo" element={<UseMemoDemo />} />
           <Route path="/use-callback" element={<UseCallbackDemo />} />
           <Route path="/use-ref" element={<UseRefDemo />} />
+          <Route path="/use-layout-effect" element={<UseLayoutEffectDemo />} />
         </Routes>
       </MainScreen>
     </div>

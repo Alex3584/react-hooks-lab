@@ -1,4 +1,42 @@
+@use "../../styles/variables.scss" as *;
+
 .footer {
-  background-color: black;
-  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-base-dark;
+  color: $color-base-light;
+  padding: 20px;
+
+
+  &__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  &__text {
+    font-size: 14px;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    color: $color-base-light;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #f39c12;
+    }
+  }
+
+  &__icon {
+    font-size: 20px;
+    margin-right: 8px;
+  }
 }

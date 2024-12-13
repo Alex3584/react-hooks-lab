@@ -1,6 +1,8 @@
-import { useState } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import React, { useState } from "react";
+import Button from "../common/Button/Button";
+import Input from "../common/Input/Input";
+import CodeHighlighter from "../common/CodeHighlighter/CodeHighlighter";
+import "./HooksDemo.scss";
 
 function UseStateDemo() {
   const [count, setCount] = useState(0);
@@ -57,106 +59,63 @@ function TextInput() {
   `;
 
   return (
-    <>
+    <section className="hook-section">
       <h2>useState</h2>
-      <p>
-        <strong>useState</strong> Використовується для керування станом
-        функціональних компонентів.
-      </p>
-      <p>
-        Виклик <strong>useState</strong> повертає дві речі: поточне значення
-        стану та функцію для його оновлення. Цю функцію можна використовувати
-        там, де зручно, наприклад, в обробнику подій. Вона виглядає з
-        <strong> this.setState</strong> у класах, але не сливає новий і старий
-        стан разом. Єдиний аргумент <strong>useState</strong> — це початкове
-        стан. У прикладі нижче — це 0, так як наш лічильник починається з нуля.
-      </p>
+      <div className="hook-section__description">
+        <p>
+          <strong>useState</strong> Використовується для керування станом
+          функціональних компонентів.
+        </p>
+        <p>
+          Виклик <strong>useState</strong> повертає дві речі: поточне значення
+          стану та функцію для його оновлення. Цю функцію можна використовувати
+          там, де зручно, наприклад, в обробнику подій. Вона виглядає з{" "}
+          <strong>this.setState</strong> у класах, але не сливає новий і старий
+          стан разом. Єдиний аргумент <strong>useState</strong> — це початкове
+          стан. У прикладі нижче — це 0, так як наш лічильник починається з нуля
+        </p>
+      </div>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h3>Counter</h3>
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-          <button onClick={decrement}>-</button>
-          <span style={{ fontSize: "1.5rem" }}>{count}</span>
-          <button onClick={increment}>+</button>
+      <div className="hook-section__examples">
+        <h3>Лічильник</h3>
+        <span className="hook-section__examples-count">{count}</span>
+        <div className="hook-section__examples-buttons">
+          <Button variant="count" onClick={decrement}>
+            -
+          </Button>
+          <Button variant="count" onClick={increment}>
+            +
+          </Button>
         </div>
-        <button onClick={reset} style={{ marginTop: "0.5rem" }}>
+        <Button onClick={reset} variant="reset">
           Reset
-        </button>
+        </Button>
 
-        <button
-          onClick={() => setShowCountCode((prev) => !prev)}
-          style={{
-            marginTop: "1rem",
-            padding: "0.5rem",
-            backgroundColor: "#1e1e1e",
-            color: "#fff",
-            border: "1px solid #444",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
-        >
-          {showCountCode ? "Hide Code" : "Show Code"}
-        </button>
+        <Button onClick={() => setShowCountCode((prev) => !prev)}>
+          {showCountCode ? "Приховати код" : "Показати код"}
+        </Button>
 
-        {showCountCode && (
-          <SyntaxHighlighter
-            language="javascript"
-            style={vscDarkPlus}
-            customStyle={{
-              marginTop: "1rem",
-              padding: "1rem",
-              borderRadius: "4px",
-              backgroundColor: "#1e1e1e",
-              color: "#fff",
-            }}
-          >
-            {countCode}
-          </SyntaxHighlighter>
-        )}
-      </section>
+        {showCountCode && <CodeHighlighter code={countCode} />}
+      </div>
 
-      <section>
+      <div className="hook-section__examples">
         <h3>Text Input</h3>
-        <input
-          type="text"
+        <Input
           value={text}
           onChange={handleTextChange}
-          placeholder="Enter text"
+          placeholder="Введіть текст"
         />
-        <p style={{ marginTop: "0.5rem" }}>You typed: {text}</p>
+        <p>
+          Ви написали: <strong>{text}</strong>
+        </p>
 
-        <button
-          onClick={() => setShowInputCode((prev) => !prev)}
-          style={{
-            marginTop: "1rem",
-            padding: "0.5rem",
-            backgroundColor: "#1e1e1e",
-            color: "#fff",
-            border: "1px solid #444",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
-        >
-          {showInputCode ? "Hide Code" : "Show Code"}
-        </button>
+        <Button onClick={() => setShowInputCode((prev) => !prev)}>
+          {showInputCode ? "Приховати код" : "Показати код"}
+        </Button>
 
-        {showInputCode && (
-          <SyntaxHighlighter
-            language="javascript"
-            style={vscDarkPlus}
-            customStyle={{
-              marginTop: "1rem",
-              padding: "1rem",
-              borderRadius: "4px",
-              backgroundColor: "#1e1e1e",
-              color: "#fff",
-            }}
-          >
-            {inputCode}
-          </SyntaxHighlighter>
-        )}
-      </section>
-    </>
+        {showInputCode && <CodeHighlighter code={inputCode} />}
+      </div>
+    </section>
   );
 }
 

@@ -1,13 +1,15 @@
+@use "../../styles/variables.scss" as *;
+
 .header {
-  background-color: #007ACC;
+  background-color: $color-base-header;
   display: flex;
   align-items: center;
   justify-content: start;
 }
 
 .logo {
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;

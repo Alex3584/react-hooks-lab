@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import Button from "../common/Button/Button";
+import CodeHighlighter from "../common/CodeHighlighter/CodeHighlighter";
+import "./HooksDemo.scss";
 
 function UseEffectDemo() {
   const [count, setCount] = useState(0);
   const [timer, setTimer] = useState(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [showCode, setShowCode] = useState(false);
+  const [showWindowWidthCode, setShowWindowWidthCode] = useState(false);
+  const [showTimerCode, setShowTimerCode] = useState(false);
 
   // Пример 1: Реальное время отображения ширины окна
   useEffect(() => {
@@ -41,13 +43,13 @@ function UseEffectDemo() {
     setCount(0);
   };
 
-  const effectCode = `
+  // Код для примера ширины окна
+  const windowWidthCode = `
 import { useState, useEffect } from "react";
 
-function UseEffectDemo() {
+function WindowWidthDemo() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  // Пример 1: Реальное время отображения ширины окна
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -55,72 +57,93 @@ function UseEffectDemo() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  return <p>Current Width: {windowWidth}px</p>;
+}
+  `;
+
+  // Код для примера таймера
+  const timerCode = `
+import { useState, useEffect } from "react";
+
+function TimerDemo() {
+  const [count, setCount] = useState(0);
+  const [timer, setTimer] = useState(null);
+
+  useEffect(() => {
+    if (timer) {
+      const interval = setInterval(() => {
+        setCount((prev) => prev + 1);
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [timer]);
+
+  const handleStartTimer = () => setTimer(true);
+  const handleStopTimer = () => {
+    setTimer(false);
+    setCount(0);
+  };
+
   return (
     <div>
-      <h3>Window Width</h3>
-      <p>Current Width: {windowWidth}px</p>
+      <p>Timer Count: {count}</p>
+      <button onClick={handleStartTimer}>Start Timer</button>
+      <button onClick={handleStopTimer}>Stop Timer</button>
     </div>
   );
 }
   `;
 
   return (
-    <>
+    <section className="hook-section">
       <h2>useEffect</h2>
-      <p>
-        <strong>useEffect</strong> is a React hook that lets you perform side
-        effects in functional components. It can run after every render, on
-        specific state changes, or only once when the component mounts.
-      </p>
+      <div className="hook-section__description">
+        <p>
+          <strong>useEffect</strong> Використовується для виконання побічних
+          ефектів у функціональних компонентах, таких як отримання даних або
+          підписка на події.
+        </p>
+        <p>
+          Коли ви викликаєте <strong>useEffect</strong>, React отримує вказівку
+          запустити вашу функцію з «ефектом» після того, як він відправив зміни
+          в DOM. Оскільки ефекти викликаються всередині компонента, у них є
+          доступ до його пропозицій і стану. За умовчанням React запускає ефекти
+          після кожного рендера, включаючи перший рендер.
+        </p>
+      </div>
+      <div className="hook-section__examples">
+        <h3>Ширина вікна</h3>
+        <p>
+          Змініть розмір вікна браузера, щоб побачити ефект у реальному часі:
+        </p>
+        <p>
+          <strong>Поточна ширина:</strong> {windowWidth}px
+        </p>
+      </div>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h3>Window Width</h3>
-        <p>Resize the browser window to see the effect in real-time:</p>
-        <p>Current Width: {windowWidth}px</p>
-      </section>
+      <Button onClick={() => setShowWindowWidthCode((prev) => !prev)}>
+        {showWindowWidthCode ? "Приховати код" : "Показати код"}
+      </Button>
 
-      <section>
-        <h3>Timer with useEffect</h3>
-        <div style={{ marginBottom: "1rem" }}>
-          <button onClick={handleStartTimer} style={{ marginRight: "1rem" }}>
-            Start Timer
-          </button>
-          <button onClick={handleStopTimer}>Stop Timer</button>
-          <p>Timer Count: {count}</p>
+      {showWindowWidthCode && <CodeHighlighter code={windowWidthCode} />}
+
+      <div className="hook-section__examples">
+        <h3>Таймер з useEffect</h3>
+        <div className="hook-section__examples-buttons">
+          <Button onClick={handleStartTimer}>Start Timer</Button>
+          <Button onClick={handleStopTimer}>Stop Timer</Button>
         </div>
-      </section>
+        <p>
+          Timer Count: <strong>{count}</strong>
+        </p>
+      </div>
 
-      <button
-        onClick={() => setShowCode((prev) => !prev)}
-        style={{
-          marginTop: "1rem",
-          padding: "0.5rem",
-          backgroundColor: "#1e1e1e",
-          color: "#fff",
-          border: "1px solid #444",
-          borderRadius: "4px",
-          cursor: "pointer",
-        }}
-      >
-        {showCode ? "Hide Code" : "Show Code"}
-      </button>
-
-      {showCode && (
-        <SyntaxHighlighter
-          language="javascript"
-          style={vscDarkPlus}
-          customStyle={{
-            marginTop: "1rem",
-            padding: "1rem",
-            borderRadius: "4px",
-            backgroundColor: "#1e1e1e",
-            color: "#fff",
-          }}
-        >
-          {effectCode}
-        </SyntaxHighlighter>
-      )}
-    </>
+      <Button onClick={() => setShowTimerCode((prev) => !prev)}>
+        {showTimerCode ? "Приховати код" : "Показати код"}
+      </Button>
+      {showTimerCode && <CodeHighlighter code={timerCode} />}
+    </section>
   );
 }
 

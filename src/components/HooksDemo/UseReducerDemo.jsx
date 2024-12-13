@@ -1,8 +1,8 @@
 import React, { useReducer, useState } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import Button from "../common/Button/Button";
+import CodeHighlighter from "../common/CodeHighlighter/CodeHighlighter";
+import "./HooksDemo.scss";
 
-// Редьюсер для управления состоянием
 const initialState = { count: 0 };
 
 function reducer(state, action) {
@@ -58,64 +58,43 @@ export default UseReducerDemo;
   `;
 
   return (
-    <>
+    <section className="hook-section">
       <h2>useReducer</h2>
-      <p>
-        <strong>useReducer</strong> is a React hook that provides an alternative
-        to `useState` for managing more complex state logic. It is particularly
-        useful when the state depends on multiple actions or when the next state
-        depends on the previous one.
-      </p>
+      <div className="hook-section__description">
+        <p>
+          <strong>useReducer</strong> - використовується для керування станом
+          складних компонентів за допомогою функції редуктора.
+        </p>
+        <p>
+          <strong>useReducer</strong> приймає редуктор (функцію для оновлення
+          стану) і початковий стан. Повертає поточний стан і функцію{" "}
+          <strong>dispatch</strong> для виклику дій.
+        </p>
+      </div>
+      <div className="hook-section__examples">
+        <h3>Лічильник за допомогою useReducer</h3>
+        <p>
+          Лічильник: <strong>{state.count}</strong>
+        </p>
+        <div className="hook-section__examples-buttons">
+          <Button onClick={() => dispatch({ type: "increment" })}>
+            Increment
+          </Button>
+          <Button onClick={() => dispatch({ type: "decrement" })}>
+            Decrement
+          </Button>
+          <Button onClick={() => dispatch({ type: "reset" })} variant="reset">
+            Reset
+          </Button>
+        </div>
+      </div>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h3>Counter with useReducer</h3>
-        <p>Count: {state.count}</p>
-        <button
-          onClick={() => dispatch({ type: "increment" })}
-          style={{ marginRight: "1rem" }}
-        >
-          Increment
-        </button>
-        <button
-          onClick={() => dispatch({ type: "decrement" })}
-          style={{ marginRight: "1rem" }}
-        >
-          Decrement
-        </button>
-        <button onClick={() => dispatch({ type: "reset" })}>Reset</button>
-      </section>
+      <Button onClick={() => setShowCode((prev) => !prev)}>
+        {showCode ? "Приховати код" : "Показати код"}
+      </Button>
 
-      <button
-        onClick={() => setShowCode((prev) => !prev)}
-        style={{
-          marginTop: "1rem",
-          padding: "0.5rem",
-          backgroundColor: "#1e1e1e",
-          color: "#fff",
-          border: "1px solid #444",
-          borderRadius: "4px",
-          cursor: "pointer",
-        }}
-      >
-        {showCode ? "Hide Code" : "Show Code"}
-      </button>
-
-      {showCode && (
-        <SyntaxHighlighter
-          language="javascript"
-          style={vscDarkPlus}
-          customStyle={{
-            marginTop: "1rem",
-            padding: "1rem",
-            borderRadius: "4px",
-            backgroundColor: "#1e1e1e",
-            color: "#fff",
-          }}
-        >
-          {reducerCode}
-        </SyntaxHighlighter>
-      )}
-    </>
+      {showCode && <CodeHighlighter code={reducerCode} />}
+    </section>
   );
 }
 

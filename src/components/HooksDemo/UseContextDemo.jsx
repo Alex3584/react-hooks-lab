@@ -1,11 +1,10 @@
 import React, { useState, createContext, useContext } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import Button from "../common/Button/Button";
+import CodeHighlighter from "../common/CodeHighlighter/CodeHighlighter";
+import "./HooksDemo.scss";
 
-// Создаем контекст
 const AppContext = createContext();
 
-// Компонент провайдера
 const AppProvider = ({ children }) => {
   const [user, setUser] = useState({ name: "John Doe", age: 30 });
 
@@ -20,11 +19,10 @@ const AppProvider = ({ children }) => {
   );
 };
 
-// Компонент, который потребляет контекст
 const UserProfile = () => {
   const { user } = useContext(AppContext);
   return (
-    <div>
+    <div className="hook-section__examples">
       <h3>User Profile</h3>
       <p>
         <strong>Name:</strong> {user.name}
@@ -36,7 +34,6 @@ const UserProfile = () => {
   );
 };
 
-// Компонент для обновления данных пользователя
 const UpdateUser = () => {
   const { updateUser } = useContext(AppContext);
 
@@ -45,9 +42,9 @@ const UpdateUser = () => {
   };
 
   return (
-    <button onClick={handleUpdate} style={{ marginTop: "1rem" }}>
+    <Button onClick={handleUpdate}>
       Update User
-    </button>
+    </Button>
   );
 };
 
@@ -108,48 +105,32 @@ export default UseContextDemo;
 
   return (
     <AppProvider>
-      <h2>useContext</h2>
-      <p>
-        <strong>useContext</strong> allows components to consume and subscribe
-        to context changes. It provides a way to share state globally across the
-        component tree without prop drilling.
-      </p>
+      <section className="hook-section">
+        <h2>useContext</h2>
+        <div className="hook-section__description">
+          <p>
+            <strong>useContext</strong> Використовується для доступу до значення
+            контексту React у функціональних компонентах. Замість того, щоб
+            вручну передавати значення через пропси, ви можете отримати його
+            безпосередньо з контексту.
+          </p>
+          <p>
+            <strong>useContext</strong> приймає об'єкт контексту, створений
+            React.createContext, і повертає його поточне значення. Компонент
+            передплачується на зміну цього контексту.
+          </p>
+        </div>
+        <div className="hook-section__examples">
+          <UserProfile />
+          <UpdateUser />
+        </div>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <UserProfile />
-        <UpdateUser />
+        <Button onClick={() => setShowCode((prev) => !prev)}>
+          {showCode ? "Приховати код" : "Показати код"}
+        </Button>
+
+        {showCode && <CodeHighlighter code={contextCode} />}
       </section>
-
-      <button
-        onClick={() => setShowCode((prev) => !prev)}
-        style={{
-          marginTop: "1rem",
-          padding: "0.5rem",
-          backgroundColor: "#1e1e1e",
-          color: "#fff",
-          border: "1px solid #444",
-          borderRadius: "4px",
-          cursor: "pointer",
-        }}
-      >
-        {showCode ? "Hide Code" : "Show Code"}
-      </button>
-
-      {showCode && (
-        <SyntaxHighlighter
-          language="javascript"
-          style={vscDarkPlus}
-          customStyle={{
-            marginTop: "1rem",
-            padding: "1rem",
-            borderRadius: "4px",
-            backgroundColor: "#1e1e1e",
-            color: "#fff",
-          }}
-        >
-          {contextCode}
-        </SyntaxHighlighter>
-      )}
     </AppProvider>
   );
 }

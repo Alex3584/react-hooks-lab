@@ -1,25 +1,28 @@
 import React, { useState, useCallback } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import Button from "../common/Button/Button";
+import Input from "../common/Input/Input";
+import CodeHighlighter from "../common/CodeHighlighter/CodeHighlighter";
+import "./HooksDemo.scss";
 
-// Дочерний компонент
 const ChildComponent = React.memo(({ handleIncrement }) => {
   console.log("Child rendered");
-  return (
-    <button onClick={handleIncrement} style={{ marginTop: "1rem" }}>
-      Increment Count
-    </button>
-  );
+  return <Button onClick={handleIncrement}>Increment Count</Button>;
 });
 
 function UseCallbackDemo() {
   const [count, setCount] = useState(0);
   const [text, setText] = useState("");
+  const [showCallbackCode, setShowCallbackCode] = useState(false);
+  const [showTextCode, setShowTextCode] = useState(false);
 
-  // Используем useCallback для мемоизации функции
   const handleIncrement = useCallback(() => {
     setCount((prev) => prev + 1);
   }, []);
+
+  const reset = () => {
+    setCount(0);
+    setText("");
+  };
 
   const callbackCode = `
 import React, { useState, useCallback } from "react";
@@ -59,47 +62,73 @@ function UseCallbackDemo() {
 export default UseCallbackDemo;
   `;
 
+  const textCode = `
+import { useState } from "react";
+
+function UnrelatedStateUpdate() {
+  const [text, setText] = useState("");
+
   return (
-    <>
+    <div>
+      <input
+        type="text"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Type something"
+      />
+      <p>You typed: {text}</p>
+    </div>
+  );
+}
+  `;
+
+  return (
+    <section className="hook-section">
       <h2>useCallback</h2>
-      <p>
-        <strong>useCallback</strong> memoizes a function, ensuring that it does
-        not get recreated unless its dependencies change. It is particularly
-        useful when passing functions to memoized child components to prevent
-        unnecessary re-renders.
-      </p>
+      <div className="hook-section__description">
+        <p>
+          <strong>useCallback</strong> - використовується для запам’ятовування
+          функцій, щоб уникнути їх створення під час кожного рендеру..
+        </p>
+        <p>
+          <strong>useCallback</strong> повертає мемоізовану версію функції, яка
+          змінюється лише тоді, коли змінюються залежності.
+        </p>
+      </div>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h3>Optimized Function with useCallback</h3>
-        <p>Count: {count}</p>
-        <ChildComponent handleIncrement={handleIncrement} />
-      </section>
+      <div className="hook-section__examples">
+        <h3>Оптимізована функція з використанням useCallback</h3>
+        <p>
+          <strong>Лічильник:</strong> {count}
+        </p>
+        <div className="hook-section__examples-buttons">
+          <ChildComponent handleIncrement={handleIncrement} />
+          <Button variant="reset" onClick={reset}>
+            Reset
+          </Button>
+        </div>
+        <Button onClick={() => setShowCallbackCode((prev) => !prev)}>
+          {showCallbackCode ? "Приховати код" : "Показати код"}
+        </Button>
+        {showCallbackCode && <CodeHighlighter code={callbackCode} />}
+      </div>
 
-      <section>
-        <h3>Unrelated State Update</h3>
-        <input
-          type="text"
+      <div className="hook-section__examples">
+        <h3>Непов'язане оновлення стану</h3>
+        <Input
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Type something"
+          placeholder="Введіть щось"
         />
-        <p>You typed: {text}</p>
-      </section>
-
-      <SyntaxHighlighter
-        language="javascript"
-        style={vscDarkPlus}
-        customStyle={{
-          marginTop: "1rem",
-          padding: "1rem",
-          borderRadius: "4px",
-          backgroundColor: "#1e1e1e",
-          color: "#fff",
-        }}
-      >
-        {callbackCode}
-      </SyntaxHighlighter>
-    </>
+        <p>
+          Ви написали: <strong>{text}</strong>
+        </p>
+        <Button onClick={() => setShowTextCode((prev) => !prev)}>
+          {showTextCode ? "Приховати код" : "Показати код"}
+        </Button>
+        {showTextCode && <CodeHighlighter code={textCode} />}
+      </div>
+    </section>
   );
 }
 

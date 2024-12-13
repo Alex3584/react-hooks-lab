@@ -1,14 +1,14 @@
+@use "../../styles/variables.scss" as *;
+
 .sidebar {
   width: 40%;
   height: 100%;
-  background-color: #f7f7f7;
-  border-right: 1px solid #ddd;
   padding: 20px;
 
   &__title {
     margin: 0;
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
+    font-size: 20px;
+    margin-bottom: 16px;
     text-align: center;
   }
 
@@ -29,25 +29,26 @@
 
   &__item {
     width: 200px;
-    border: 1px solid black;
+    border: 1px solid $color-base-dark;
     border-radius: 20px;
-    margin-bottom: 0.5rem;
+    margin-bottom: 10px;
   }
 
   &__link {
     display: block;
-    color: #333;
+    color: $color-base-dark;
     text-decoration: none;
-    padding: 0.5rem;
+    padding: 10px;
     border-radius: 20px;
 
     &:hover {
-      background-color: aquamarine;
+      background-color: $color-link-hover;
+      color: $color-base-light;
     }
   }
 
   &__link--active {
-    background-color: #ddd;
+    background-color: $color-button-hover;
     font-weight: bold;
   }
 }
