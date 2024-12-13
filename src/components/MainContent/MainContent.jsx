@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import MainScreen from "../MainScreen/MainScreen";
 import "./MainContent.scss";
@@ -18,6 +18,7 @@ function MainContent() {
       <Sidebar />
       <MainScreen>
         <Routes>
+          <Route path="/" element={<Navigate to="/use-state" replace />} />
           <Route path="/use-state" element={<UseStateDemo />} />
           <Route path="/use-effect" element={<UseEffectDemo />} />
           <Route path="/use-context" element={<UseContextDemo />} />
